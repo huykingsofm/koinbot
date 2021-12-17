@@ -40,6 +40,7 @@ class DefaultBot:
 
 class HelpBot(DefaultBot):
     __HELPER__ = "/hi - Chào bot đi bạn, bot sẽ yêu bạn\n" \
+                 "/price token - Xem giá\n" \
                  "/order token price [(high)|low] - Đặt lệnh thông báo khi giá vượt giới hạn\n" \
                  "/say - Nói gì đi bot"
 
@@ -116,7 +117,7 @@ class PriceBot(DefaultBot):
         if priceInfo == None:
             return API.sendMessage("Đồng éo gì đây bạn??", self._reply_to)
 
-        msg = "{} {}/BNB={}  {}/USD={}".format(
+        msg = "{} {}/BNB={:.4f}  {}/USD={:.6f}".format(
             priceInfo.name,
             priceInfo.symbol, priceInfo.bnb_price,
             priceInfo.symbol, priceInfo.price)

@@ -1,3 +1,4 @@
+import os
 import interfaces
 from contract import Contract
 
@@ -5,7 +6,7 @@ import json
 import requests
 
 class API:
-    __token = "5009811278:AAFtgzslzD11ZZJaFaKWQY6NK3O961BNFnI"
+    __token = os.environ['BOTOKEN']
     __tele_url = "https://api.telegram.org/bot{}/{}".format(__token, "{}")
     __pancake_url = "https://api.pancakeswap.info/api/v2/tokens/{}"
     __latest_update = 0
@@ -32,7 +33,7 @@ class API:
         API.__latest_update = update["result"][0]["update_id"] + 1
     
         try:
-            message = update["result"][0]["message"]
+            message = update["result"][0]["message"]["text"]
         except KeyError:
             return None
     

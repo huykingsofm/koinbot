@@ -45,14 +45,14 @@ class HelpBot(DefaultBot):
                  "/say - Nói gì đi bot"
 
     def parse_argv(self) -> bool:
-        return len(self._argv) == 1
+        return len(self._argv) == 1 and self._argv[0] == "/help"
 
     def handle(self) ->bool:
         return API.sendMessage(HelpBot.__HELPER__, self._reply_to)
 
 class HelloBot(DefaultBot):
     def parse_argv(self) -> bool:
-        return len(self._argv) == 1
+        return len(self._argv) == 1 and self._argv[0] == "/hi" 
     
     def handle(self) -> bool:
         return API.sendMessage("https://www.youtube.com/watch?v=NmH2Ijv076Q", self._reply_to)
@@ -61,6 +61,9 @@ class HelloBot(DefaultBot):
 class OrderBot(DefaultBot):
     def parse_argv(self) -> bool:
         if len(self._argv) != 3 and len(self._argv) != 4:
+            return False
+
+        if self._argv[0] != "/order":
             return False
 
         self.stop_type = OrderType.HIGH
@@ -82,7 +85,7 @@ class OrderBot(DefaultBot):
         API.sendMessage("Successfully. Please check [Order-{}] in the future".format(id), self._reply_to)
 
 
-class RandomBot(DefaultBot):
+class SayBot(DefaultBot):
     __SOMETHING__ = [
         "Vãi l*n đòi nói chuyện với bot, đi kiếm người yêu đi ba",
         "https://www.youtube.com/watch?v=NmH2Ijv076Q",
@@ -94,12 +97,15 @@ class RandomBot(DefaultBot):
         "Ai cho xin server xịn hơn đê, máy chịu hết nổi rồi"
     ]
     
+    def parse_argv(self) -> bool:
+        return len(self._argv) >= 1 and self._argv[0] == "/say"
+    
     def handle(self) -> bool:
-        return API.sendMessage(random.choice(RandomBot.__SOMETHING__), self._reply_to)
+        return API.sendMessage(random.choice(SayBot.__SOMETHING__), self._reply_to)
 
 class PriceBot(DefaultBot):
     def parse_argv(self) -> bool:
-        if len(self._argv) != 2:
+        if len(self._argv) != 2 or self._argv[0] != "/price":
             return False
         
         self.token = self._argv[1].upper()

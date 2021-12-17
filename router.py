@@ -12,7 +12,7 @@ class BotRouter:
         elif message.startswith("/order"):
             return subbot.OrderBot(message, reply_to)
         elif message.startswith("/say"):
-            return subbot.RandomBot(message, reply_to)
+            return subbot.SayBot(message, reply_to)
         elif message.startswith("/price"):
             return subbot.PriceBot(message, reply_to)
         else:

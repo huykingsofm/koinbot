@@ -33,7 +33,8 @@ class API:
         API.__latest_update = update["result"][0]["update_id"] + 1
     
         try:
-            message = update["result"][0]["message"]["text"]
+            message = update["result"][0]["message"]
+            message["text"]
         except KeyError:
             return None
     
